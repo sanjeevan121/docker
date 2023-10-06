@@ -1,4 +1,5 @@
-sudo: require
+sudo: required
+language: generic
 services:
   - docker
 
@@ -6,16 +7,16 @@ before_install:
   - docker build -t sanjeevandocker/webapp -f Dockerfile.dev .
   
 script:
-  - docker run -e CI=true sanjeevandocker/webapp npm run test -- --coverage
+  - docker run -e CI=true sanjeevandocker/webapp npm run test
 
 deploy:
-  - provider: elasticbeanstalk
-    region: "ap-south-1"
-    app: "docker-webapp"
-    env: "Docker-webapp-env"
-    bucket_name: "elasticbeanstalk-ap-south-1-255245207523"
-    bucket: "docker-webapp"
-    on:
-      branch: main
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
+  provider: elasticbeanstalk
+  region: "ap-south-1"
+  app: "docker-webapp"
+  env: "Docker-webapp-env"
+  bucket_name: "elasticbeanstalk-ap-south-1-255245207523"
+  bucket: "docker-webapp"
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
