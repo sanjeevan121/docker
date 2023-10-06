@@ -7,3 +7,15 @@ before_install:
   
 script:
   - docker run -e CI=true sanjeevandocker/webapp npm run test -- --coverage
+
+deploy:
+  - provider: elasticbeanstalk
+    region: "ap-south-1"
+    app: "docker-webapp"
+    env: "Docker-webapp-env"
+    bucket_name: "elasticbeanstalk-ap-south-1-255245207523"
+    bucket: "docker-webapp"
+    on:
+      branch: main
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
